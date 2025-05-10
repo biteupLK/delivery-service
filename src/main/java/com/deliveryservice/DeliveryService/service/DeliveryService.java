@@ -28,6 +28,7 @@ public class DeliveryService {
             delivery.setAge(req.getAge());
             delivery.setVehicleNumber(req.getVehicleNumber());
             delivery.setVehicleType(req.getVehicleType());
+            delivery.setContactNumber(req.getContactNumber());
 
             Delivery saved = deliveryRepository.save(delivery);
             log.info("Delivery person created successfully: {}", saved);
@@ -58,6 +59,7 @@ public class DeliveryService {
 
             Delivery delivery = optionalDelivery.get();
             delivery.setDeliveryName(req.getDeliveryName());
+            delivery.setEmail(email);
             delivery.setAge(req.getAge());
             delivery.setVehicleNumber(req.getVehicleNumber());
             delivery.setVehicleType(req.getVehicleType());
