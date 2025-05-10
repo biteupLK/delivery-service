@@ -71,8 +71,8 @@ public class DeliveryController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteDeliveryPerson(@RequestParam String email) {
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<String> deleteDeliveryPerson(@PathVariable String email) {
         boolean deleted = deliveryService.deleteDeliveryPerson(email);
         if (deleted) {
             return ResponseEntity.ok("Delivery person deleted successfully.");
@@ -83,11 +83,9 @@ public class DeliveryController {
     }
 
     @GetMapping("/checkDelivery/{email}")
-    public ResponseEntity<Boolean> checkIfDeliveryExists(@PathVariable String email){
+    public ResponseEntity<Boolean> checkIfDeliveryExists(@PathVariable String email) {
         boolean exists = deliveryService.checkIfDeliverExists(email);
         return ResponseEntity.ok(exists);
     }
-    
-
 
 }
