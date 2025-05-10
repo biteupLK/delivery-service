@@ -46,14 +46,14 @@ public class DeliveryService {
         return deliveryRepository.findByEmail(email);
     }
 
-    public DeliveryResponseDTO updateDeliveryPerson(DeliveryRequestDTO req, String email){
-        try{
+    public DeliveryResponseDTO updateDeliveryPerson(DeliveryRequestDTO req, String email) {
+        try {
             Optional<Delivery> optionalDelivery = deliveryRepository.findByEmail(email);
 
-            if(!optionalDelivery.isPresent()){
+            if (!optionalDelivery.isPresent()) {
                 return DeliveryResponseDTO.builder()
-                .error("Restaurant Not Found" + email)
-                .build();
+                        .error("Restaurant Not Found" + email)
+                        .build();
             }
 
             Delivery delivery = optionalDelivery.get();
@@ -66,23 +66,27 @@ public class DeliveryService {
             deliveryRepository.save(delivery);
 
             return DeliveryResponseDTO.builder()
-            .message("Update successful")
-            .build();
+                    .message("Update successful")
+                    .build();
         } catch (Exception e) {
             log.error("Error updating delivery person: {}", e.getMessage());
             return DeliveryResponseDTO.builder()
-            .error("Error updating delivery person")
-            .build();
+                    .error("Error updating delivery person")
+                    .build();
         }
     }
 
-    public boolean deleteDeliveryPerson(String email){
+    public boolean deleteDeliveryPerson(String email) {
         Optional<Delivery> optionalDelivery = deliveryRepository.findByEmail(email);
-        if(optionalDelivery.isPresent()){
+        if (optionalDelivery.isPresent()) {
             deliveryRepository.delete(optionalDelivery.get());
             return true;
         }
         return false;
+    }
+
+    public boolean checkIfDeliverExists(String email) {
+        return deliveryRepository.findByEmail(email).isPresent();
     }
 
 }
