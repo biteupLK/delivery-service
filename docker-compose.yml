@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  delivery-service:
+    build: .
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mongodb
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongodb:27017/deliverydb?authSource=admin
+      - SPRING_APPLICATION_NAME=DeliveryService
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    networks:
+      - backend
+
+networks:
+  backend:
