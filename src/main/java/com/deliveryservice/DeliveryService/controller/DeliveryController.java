@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deliveryservice.DeliveryService.dto.DeliveryRequestDTO;
 import com.deliveryservice.DeliveryService.dto.DeliveryResponseDTO;
 import com.deliveryservice.DeliveryService.model.Delivery;
-import com.deliveryservice.DeliveryService.repository.DeliveryRepository;
 import com.deliveryservice.DeliveryService.service.DeliveryService;
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,8 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class DeliveryController {
 
-    @Autowired
-    private final DeliveryRepository deliveryRepository;
     private final DeliveryService deliveryService;
 
     @PostMapping("/create")
@@ -86,8 +82,12 @@ public class DeliveryController {
         }
     }
 
-    public boolean checkIfDeliverExists(String email){
-        return deliveryRepository.findByEmail(email).isPresent();
+    @GetMapping("/checkDelivery/{email}")
+    public ResponseEntity<Boolean> checkIfDeliveryExists(@PathVariable String email){
+        boolean exists = deliveryService.checkIfDeliverExists(email);
+        return ResponseEntity.ok(exists);
     }
+    
+
 
 }
